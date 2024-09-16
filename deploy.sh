@@ -4,7 +4,7 @@ getEnv() {
   local VARIABLE="$1"
   (
     source .env
-    echo "${VARIABLE}"
+    echo "${!VARIABLE}"
   )
 }
 
