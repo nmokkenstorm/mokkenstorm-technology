@@ -1,10 +1,11 @@
  #!/usr/bin/env bash
 
-parseEnv() {
-  echo $(grep $1 .env | grep -oE '=.*' | sed 's/^=//g' | sed 's/"//g');
+getEnv() {
+  local VARIABLE="$1"
+  (
+    source .env
+    echo "${VARIABLE}"
+  )
 }
 
-HOST=$(parseEnv HOST)
-ROOT=$(parseEnv ROOT)
-
-rsync -rvva --exclude .git --exclude .env . root@$HOST:$ROOT
+rsync -rvva --exclude .git --exclude .env . "root@$(getEnv HOST):$(getEnv ROOT)"
